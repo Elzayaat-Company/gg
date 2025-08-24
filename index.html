@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شركة الزيات للإنتاج الداجني</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #800000;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 1rem;
+    }
+
+    input, select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      min-width: 180px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .card p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #800000;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #a00000;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      text-align: right;
+      position: relative;
+    }
+
+    .modal img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 15px;
+      border-radius: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 3000;
+      font-size: 22px;
+      color: #800000;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loader">جاري التحميل...</div>
+
+  <header>
+    <h1>شركة الزيات للإنتاج الداجني</h1>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="ابحث عن دواء...">
+    <select id="categoryFilter">
+      <option value="all">كل التصنيفات</option>
+    </select>
+    <select id="sortSelect">
+      <option value="default">ترتيب افتراضي</option>
+      <option value="asc">السعر: من الأقل للأعلى</option>
+      <option value="desc">السعر: من الأعلى للأقل</option>
+    </select>
+  </div>
+
+  <div class="products" id="productList"></div>
+
+  <!-- Modal -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <span class="close" id="modalClose">&times;</span>
+      <img id="modalImg" src="" alt="">
+      <h2 id="modalName"></h2>
+      <p id="modalDesc"></p>
+      <p><strong>الجرعة:</strong> <span id="modalDose"></span></p>
+      <p><strong>السعر:</strong> <span id="modalPrice"></span> ج.م</p>
+      <a id="modalVideo" href="" target="_blank" class="btn" style="display:none;">شاهد الفيديو</a>
+    </div>
+  </div>
+
+  <script>
+    const productList = document.getElementById("productList");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const sortSelect = document.getElementById("sortSelect");
+    const loader = document.getElementById("loader");
+
+    const modal = document.getElementById("productModal");
+    const modalClose = document.getElementById("modalClose");
+    const modalImg = document.getElementById("modalImg");
+    const modalName = document.getElementById("modalName");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalDose = document.getElementById("modalDose");
+    const modalPrice = document.getElementById("modalPrice");
+    const modalVideo = document.getElementById("modalVideo");
+
+    let products = [];
+
+    // تحميل المنتجات من ملف JSON
+    fetch("products.json")
+      .then(res => res.json())
+      .then(data => {
+        products = data;
+        loader.style.display = "none";
+        fillCategories();
+        displayProducts(products);
+      });
+
+    function fillCategories() {
+      const categories = [...new Set(products.map(p => p.category))];
+      categories.forEach(cat => {
+        const option = document.createElement("option");
+        option.value = cat;
+        option.textContent = cat;
+        categoryFilter.appendChild(option);
+      });
+    }
+
+    function displayProducts(list) {
+      productList.innerHTML = "";
+      list.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${p.image || 'https://via.placeholder.com/300x150?text=No+Image'}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p><strong>السعر:</strong> ${p.price} ج.م</p>
+          <button class="btn" onclick="showDetails(${p.id})">التفاصيل</button>
+        `;
+        productList.appendChild(card);
+      });
+    }
+
+    function showDetails(id) {
+      const p = products.find(x => x.id === id);
+      modalImg.src = p.image || "https://via.placeholder.com/300x150?text=No+Image";
+      modalName.textContent = p.name;
+      modalDesc.textContent = p.description;
+      modalDose.textContent = p.dose;
+      modalPrice.textContent = p.price;
+      if (p.video) {
+        modalVideo.href = p.video;
+        modalVideo.style.display = "inline-block";
+      } else {
+        modalVideo.style.display = "none";
+      }
+      modal.style.display = "flex";
+    }
+
+    modalClose.onclick = () => modal.style.display = "none";
+    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+
+    searchInput.addEventListener("input", filterProducts);
+    categoryFilter.addEventListener("change", filterProducts);
+    sortSelect.addEventListener("change", filterProducts);
+
+    function filterProducts() {
+      let filtered = [...products];
+      const search = searchInput.value.toLowerCase();
+      const category = categoryFilter.value;
+      const sort = sortSelect.value;
+
+      if (search) {
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(search));
+      }
+
+      if (category !== "all") {
+        filtered = filtered.filter(p => p.category === category);
+      }
+
+      if (sort === "asc") {
+        filtered.sort((a,b) => a.price - b.price);
+      } else if (sort === "desc") {
+        filtered.sort((a,b) => b.price - a.price);
+      }
+
+      displayProducts(filtered);
+    }
+  </script>
+</body>
+</html>

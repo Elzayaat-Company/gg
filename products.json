@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "أموكسيسيللين 500",
+    "category": "مضاد حيوي",
+    "price": "120 جنيه",
+    "image": "images/amoxicillin.jpg",
+    "description": "مضاد حيوي واسع المدى يستخدم لعلاج الالتهابات البكتيرية في الدواجن.",
+    "dose": "1 جم لكل لتر ماء",
+    "video": "https://www.youtube.com/embed/example1"
+  },
+  {
+    "id": 2,
+    "name": "فيتامين ADE",
+    "category": "فيتامينات",
+    "price": "80 جنيه",
+    "image": "images/vitaminade.jpg",
+    "description": "مكمل فيتامينات لتحسين المناعة والنمو في الدواجن.",
+    "dose": "2 مل لكل لتر ماء",
+    "video": ""
+  },
+  {
+    "id": 3,
+    "name": "تايلوزين 200",
+    "category": "مضاد حيوي",
+    "price": "150 جنيه",
+    "image": "images/tylosin.jpg",
+    "description": "مضاد حيوي فعال ضد أمراض الجهاز التنفسي في الدواجن.",
+    "dose": "0.5 جم لكل لتر ماء",
+    "video": "https://www.youtube.com/embed/example2"
+  },
+  {
+    "id": 4,
+    "name": "سيلينيوم + فيتامين E",
+    "category": "منشطات",
+    "price": "95 جنيه",
+    "image": "images/seleniumE.jpg",
+    "description": "مضاد أكسدة يعزز الخصوبة والمناعة.",
+    "dose": "1 مل لكل 2 لتر ماء",
+    "video": ""
+  },
+  {
+    "id": 5,
+    "name": "كلورامفينيكول",
+    "category": "أدوية علاجية",
+    "price": "110 جنيه",
+    "image": "images/chloramphenicol.jpg",
+    "description": "دواء علاجي يستخدم لعلاج التهابات الجهاز الهضمي.",
+    "dose": "1 جم لكل 2 لتر ماء",
+    "video": "https://www.youtube.com/embed/example3"
+  },
+  {
+    "id": 6,
+    "name": "إنروفلوكساسين 10%",
+    "category": "مضاد حيوي",
+    "price": "130 جنيه",
+    "image": "images/enrofloxacin.jpg",
+    "description": "مضاد حيوي واسع المدى يستخدم ضد العدوى البكتيرية في الدواجن.",
+    "dose": "1 مل لكل لتر ماء",
+    "video": ""
+  },
+  {
+    "id": 7,
+    "name": "جلوكوز + فيتامين C",
+    "category": "منشطات",
+    "price": "70 جنيه",
+    "image": "images/glucoseC.jpg",
+    "description": "مكمل طاقة وفيتامين C لمواجهة الإجهاد الحراري.",
+    "dose": "2 جم لكل لتر ماء",
+    "video": "https://www.youtube.com/embed/example4"
+  },
+  {
+    "id": 8,
+    "name": "كوليستين سلفات",
+    "category": "أدوية علاجية",
+    "price": "140 جنيه",
+    "image": "images/colistin.jpg",
+    "description": "دواء يستخدم لعلاج الإسهال والتهابات الأمعاء في الدواجن.",
+    "dose": "0.5 جم لكل لتر ماء",
+    "video": ""
+  },
+  {
+    "id": 9,
+    "name": "مولتي فيتامين بلاس",
+    "category": "فيتامينات",
+    "price": "85 جنيه",
+    "image": "images/multivitamin.jpg",
+    "description": "مكمل متعدد الفيتامينات لتعويض نقص العناصر الغذائية.",
+    "dose": "1 مل لكل لتر ماء",
+    "video": ""
+  },
+  {
+    "id": 10,
+    "name": "دوكسيسيكلين 20%",
+    "category": "مضاد حيوي",
+    "price": "160 جنيه",
+    "image": "images/doxycycline.jpg",
+    "description": "مضاد حيوي فعال لعلاج الالتهابات البكتيرية في الجهاز التنفسي والهضمي.",
+    "dose": "0.5 جم لكل لتر ماء",
+    "video": "https://www.youtube.com/embed/example5"
+  }
+]
